@@ -40,30 +40,35 @@ char to_lower(char letter)
 
 int main(int argc, char *argv[])
 {
-	if(argc != 2){
-		printf("Error: You need one argument.\n");
+	if(argc < 2){
+		printf("Error: You need at least one argument.\n");
 		//this is how you abort a program
 		return 1;
 	}
 	int i;
+	int j;
 	char letter;
-	//following the extra credit point 2 about initializing letter inside for loop
-	//if you don't add duplicate code to update letter then for loop will keep executing
-	//since it will keep the first letter from argv string which most probably isn't a \0 terminator
-	//if you duplicate the initialization statement inside the loop as an updater you get another bug
-	//you will print on empty char after whatever you input, thus breaking the printer
-	//broken printer works like this
-	//because the increment to i occurs after letter is updated inside the loop
-	//the comparison is always to the previous letter to what will actually be printed
-	//allowing the '\0' terminator to be printed
-	for(i = 0, letter = argv[1][i]; letter != '\0'; i++){
-		letter = to_lower(argv[1][i]);
-		printer(letter, i);
+	//following the extra credit point 3 and adding a for loop to handle all arguments passed
+	for(j = 1; argv[j] != NULL; j++)
+	{
+		//following the extra credit point 2 about initializing letter inside for loop
+		//if you don't add duplicate code to update letter then for loop will keep executing
+		//since it will keep the first letter from argv string which most probably isn't a \0 terminator
+		//if you duplicate the initialization statement inside the loop as an updater you get another bug
+		//you will print on empty char after whatever you input, thus breaking the printer
+		//broken printer works like this
+		//because the increment to i occurs after letter is updated inside the loop
+		//the comparison is always to the previous letter to what will actually be printed
+		//allowing the '\0' terminator to be printed
+		for(i = 0, letter = argv[j][i]; letter != '\0'; i++){
+			letter = to_lower(argv[j][i]);
+			printer(letter, i);
+		}
+		//working printer
+		for(i = 0; argv[j][i] != '\0'; i++){
+			letter = to_lower(argv[j][i]);
+			printer(letter, i);
+		}	
 	}
-	//working printer
-	for(i = 0; argv[1][i] != '\0'; i++){
-		letter = to_lower(argv[1][i]);
-		printer(letter, i);
-	}	
 	return 0;
 }
