@@ -3,10 +3,18 @@
 int main(int argc, char *argv[])
 {
 	int areas[] = {10, 12, 13, 14, 20};
+	//Extra credit point 1, assign to elements in the areas array
+	areas[0] = 100;
 	char name[] = "Zed";
 	//char full_name[] = {'Z', 'e', 'd', ' ', 'A', '.', ' ', 'S', 'h', 'a', 'w', '\0'};
 	//How to break it first point, remove the zero byte terminator from full_name
 	char full_name[] = {'Z', 'e', 'd', ' ', 'A', '.', ' ', 'S', 'h', 'a', 'w'};
+	//Extra credit point 2, assign elements of name to full_name
+	full_name[0] = name[2];
+	full_name[1] = name[1];
+	full_name[2] = name[0];
+	//extra credit point 3, set one element of areas to a character from name
+	areas[1] = name[0];
 	//WARNING: On some systems you may have to change the
 	// %ld in this code to a %u since it will use unsigned ints
 	printf("The size of an int: %ld.\n", sizeof(int));
