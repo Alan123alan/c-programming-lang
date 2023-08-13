@@ -10,7 +10,8 @@ int main(int argc, char *argv[])
 		printf("arg #%d: %s.\n", i, argv[i]);
 	}
 	// let's make our own array of strings
-	char *states[] = { "Oregon", "California", "Arizona", "Colorado"};
+	// extra credit point 3, add NULL to states strings array
+	char *states[] = { "Oregon", "California", "Arizona", "Colorado", NULL};
 	// how to break it point 3, set num_of_states to a value higher to the elements contained in states strings array
 	int num_of_states = 5;
 	for(int i = 0; i < num_of_states; i++)
