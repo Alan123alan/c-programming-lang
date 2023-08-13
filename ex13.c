@@ -11,7 +11,8 @@ int main(int argc, char *argv[])
 	}
 	// let's make our own array of strings
 	char *states[] = { "Oregon", "California", "Arizona", "Colorado"};
-	int num_of_states = 4;
+	// how to break it point 3, set num_of_states to a value higher to the elements contained in states strings array
+	int num_of_states = 5;
 	for(int i = 0; i < num_of_states; i++)
 	{
 		printf("State %d: %s.\n", i, states[i]);
