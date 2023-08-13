@@ -5,7 +5,8 @@ int main(int argc, char *argv[])
 	// go through each string in argv
 
 	// why am I skipping over argv[0]? because argv[0] is the program name
-	for(int i = 1; i < argc; i++){
+	// how to break it point 2, initialize i to 0
+	for(int i = 0; i < argc; i++){//initializing to 0 works because the first argv is the program name
 		printf("arg #%d: %s.\n", i, argv[i]);
 	}
 	// let's make our own array of strings
