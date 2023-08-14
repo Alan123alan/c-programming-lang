@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <strings.h>
 
 // forward declarations
 /*
@@ -9,32 +10,30 @@
 // how to break it point #1, remove forward declaration  to confuse compiler and cause it to complain
 // after getting error about implicit function declaration added back the forward declarations
 int can_print_it(char ch);
-void print_letters(char arg[]);
+void print_letters(char arg[], int arg_len);
 
 void print_arguments(int argc, char *argv[])
 {
 	for(int i = 0; i < argc; i++){
-		print_letters(argv[i]);
+		int argv_len = strlen(argv[i]);
+		print_letters(argv[i], argv_len);
 	}
 }
 
-void print_letters(char arg[])
+void print_letters(char arg[], int arg_len)
 {
-	for(int i = 0; arg[i] != '\0'; i++){
+	// extra credit point #2, avoid relying on '\0' to check for string end
+	for(int i = 0; i < arg_len; i++){
 		char ch = arg[i];
-		if(can_print_it(ch)){
+		//isalpha checks if char is alphabetic and isblank checks if char is a blank char
+		//this function returns 1 (true) if char is an alphabetic or blank char
+		// extra credit point #1, remove can_print_it function (added it as a relation operation)
+		if(isalpha(ch) || isblank(ch)){
 			printf("'%c' == %d ",ch, ch);
 		}
 	}
 	printf("\n");
 }	
-
-int can_print_it(char ch)
-{
-	//isalpha checks if char is alphabetic and isblank checks if char is a blank char
-	//this function returns 1 (true) if char is an alphabetic or blank char
-	return isalpha(ch) || isblank(ch);
-}
 
 int main(int argc, char *argv[])
 {
