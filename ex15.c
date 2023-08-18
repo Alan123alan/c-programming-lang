@@ -5,6 +5,16 @@ int main(int argc, char *argv[])
 	// create two arrays we care about
 	int ages[] = { 23, 43, 12, 89, 2};
 	char *names[] = { "Alan", "Frank", "Mary", "John", "Lisa"};
+
+	// ages will be the address of the first int in ages
+	printf("ages: %d.\n", ages);
+	
+	// since ages is already the address with dereference operator we should get the value
+	printf("ages: %d.\n", *ages);
+
+	// then what is returned if we use the address of data operator??
+	// my guess is that it will print the same address as just printing ages
+	printf("ages: %d.\n", &ages);
 	
 	// safely get the size of ages
 	int count = sizeof(ages)/sizeof(int);
