@@ -37,7 +37,11 @@ int main(int argc, char *argv[])
 	printf("---\n");
 	
 	// third way, pointers are just arrays
+	printf("size of ages (in bytes) to which curr_age points to: %ld == %ld ints.\n", sizeof(ages), sizeof(ages)/sizeof(int));
 	for(int i = 0; i < count; i++){
+		// A difference between pointers and arrays sizeof pointers just returns the size of pointer type
+		// sizeof an array returns the size of the whole array
+		printf("size of curr_age int pointer: %ld.\n", sizeof(curr_name));
 		printf("%s is %d years old.\n", curr_name[i], curr_age[i]);
 	}
 	
