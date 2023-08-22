@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
 	int *curr_age = ages;
 	char **curr_name = names;
 	
+	
 	// second way using pointers
 	for(int i = 0; i < count; i++){
 		printf("%s is %d years old.\n", *(curr_name + i), *(curr_age + i));
@@ -51,5 +52,10 @@ int main(int argc, char *argv[])
 	for(curr_name = names, curr_age = ages; (curr_age - ages) < count; curr_name++, curr_age++){
 		printf("%s is %d years old.\n", *curr_name, *curr_age);
 	}
+	
+	
+	// How to break it point #1
+	curr_age = (int**)names;
+	printf("curr_age %d %s.\n", &curr_age, *curr_age);
 	return 0;
 }
