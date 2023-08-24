@@ -64,13 +64,10 @@ int main(int argc, char *argv[])
 	printf("---\n");
 
 	// fourth way with pointers in a stupid complex way
-	for(curr_age = ages + (count-1); (curr_age - ages) >= 0; curr_age--){
-		printf("%d years old.\n", *curr_age);
+	for(curr_age = ages + (count - 1), curr_name = names + (names_count - 1); (curr_age - ages) >= 0; curr_age--,curr_name--){
+		printf("%s is %d years old.\n",*curr_name, *curr_age);
 	}
-	for(curr_name = names + (names_count-1); (curr_name - names) >= 0; curr_name--){
-		printf("%s.\n", *curr_name);
-	}
-	
+
 	
 	// How to break it point #1
 	//curr_age = (int**)names;
