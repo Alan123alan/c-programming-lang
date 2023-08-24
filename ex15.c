@@ -5,8 +5,11 @@ int main(int argc, char *argv[])
 	// How to break it point #2, invert all loops	
 
 	// create two arrays we care about
-	int ages[] = { 23, 43, 12, 89, 2};
-	char *names[] = { "Alan", "Frank", "Mary", "John", "Lisa"};
+	// Extra credit point 1 rewrite all arrays as pointers
+	int ages_arr[] = { 23, 43, 12, 89, 2};
+	int *ages = ages_arr; 
+	char *names_arr[] = { "Alan", "Frank", "Mary", "John", "Lisa"};
+	char **names = names_arr;
 
 	// ages will be the address of the first int in ages
 	//printf("ages: %d.\n", ages);
@@ -19,12 +22,12 @@ int main(int argc, char *argv[])
 	//printf("ages: %d.\n", &ages);
 
 	// what does names point to? "Alan"? or just "A"?
-	printf("names: %d.\n", names);// got an address, need to dereference
-	printf("names points at: %d.\n", *names);// it prints another address, so it's an array of pointers
+	printf("names evaluates to the address: %p.\n", (void *) names);// got an address, need to dereference
+	printf("the value pointed at by the names address: %p.\n", (void *) *names);// it prints another address, so it's an array of pointers
 	// and this pointers point to the first pointer of the char array, can I get the address of this char array?
 	//what is the size of names?
-	int names_size = sizeof(names);
-	int names_count = sizeof(names)/sizeof(names[0]);
+	int names_size = sizeof(names_arr);
+	int names_count = sizeof(names_arr)/sizeof(names);
 	//int first_str_size = sizeof(*names)/sizeof(char);
 	printf("size of names = %d.\n", names_size);
 	printf("count of names = %d.\n", names_count);
@@ -32,7 +35,7 @@ int main(int argc, char *argv[])
 	printf("value of first string? : %c.\n", *(*names));
 	
 	// safely get the size of ages
-	int count = sizeof(ages)/sizeof(int);
+	int count = sizeof(ages_arr)/sizeof(int);
 	
 	// first way using indexing
 	for(int i = count-1; i >= 0; i--){
@@ -53,7 +56,7 @@ int main(int argc, char *argv[])
 	printf("---\n");
 	
 	// third way, pointers are just arrays
-	printf("size of ages (in bytes) to which curr_age points to: %ld == %ld ints.\n", sizeof(ages), sizeof(ages)/sizeof(int));
+	printf("size of ages (in bytes) to which curr_age points to: %ld == %d ints.\n", sizeof(ages_arr), count);
 	for(int i = count-1; i >= 0; i--){
 		// A difference between pointers and arrays sizeof pointers just returns the size of pointer type
 		// sizeof an array returns the size of the whole array
