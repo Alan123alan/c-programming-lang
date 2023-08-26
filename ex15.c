@@ -1,8 +1,18 @@
 #include <stdio.h>
 #include <string.h>
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
+	//Extra credit point 3 process command line arguments using just pointers
+	int arg_size = sizeof(argv);
+	int arg_count = sizeof(argv)/sizeof(argv[0]);	
+	printf("arguments passed to main function: %d.\n", arg_count);
+	printf("argv size: %d.\n", arg_size);
+	printf("argv %p.\n", (void *) argv);
+	printf("argv %s.\n", *argv);
+	for(int i = 0; i < argc; i++){
+		printf("argv %s.\n", *(argv + i));
+	}
 	// How to break it point #2, invert all loops	
 	// create two arrays we care about
 	// Extra credit point 1 rewrite all arrays as pointers
