@@ -1,6 +1,39 @@
 #include <stdio.h>
 #include <string.h>
 
+void first_print(int *, int, char *[], int);
+void second_prinf(int *, int, char *[]);
+void third_print(int *, int, char *[]);
+
+
+void first_print(int *ages, int ages_count, char *names[], int name_count){
+	// first way using indexing
+	for(int i = ages_count-1; i >= 0; i--){
+		printf("%s is %d years old.\n", names[i], ages[i]);
+	}
+	printf("---\n");
+}
+
+void second_print(int *curr_age, int ages_count, char **curr_name){
+	// second way using pointers
+	for(int i = ages_count-1; i >= 0; i--){
+		printf("%s is %d years old.\n", *(curr_name + i), *(curr_age + i));
+	}
+	printf("---\n");
+}
+
+void third_print(int *curr_age, int ages_count, char **curr_name){
+	// third way, pointers are just arrays
+	for(int i = ages_count-1; i >= 0; i--){
+		// Difference between pointers and arrays:
+		// sizeof pointers just returns the size of pointer type
+		// sizeof an array returns the size of the whole array
+		printf("size of curr_age: %ld.\n", sizeof(curr_name));
+		printf("%s is %d years old.\n", curr_name[i], curr_age[i]);
+	}
+	printf("---\n");
+}
+
 int main(int argc, char **argv)
 {
 	//Extra credit point 3 process command line arguments using just pointers
@@ -18,7 +51,7 @@ int main(int argc, char **argv)
 	// Extra credit point 1 rewrite all arrays as pointers
 	// Extra credit point 2 rewrite all pointers as arrays
 	int ages[] = { 23, 43, 12, 89, 2};
-	char names[5][5] = { "Alan", "Frank", "Mary", "John", "Lisa"};
+	char *names[] = { "Alan", "Frank", "Mary", "John", "Lisa"};
 
 
 	// what does names point to? "Alan"? or just "A"?
@@ -27,7 +60,7 @@ int main(int argc, char **argv)
 	// and this pointers point to the first pointer of the char array, can I get the address of this char array?
 	//what is the size of names?
 	int names_size = sizeof(names);
-	int names_count = sizeof(names)/sizeof(names);
+	int names_count = sizeof(names)/sizeof(names[0]);
 	//int first_str_size = sizeof(*names)/sizeof(char);
 	printf("size of names = %d.\n", names_size);
 	printf("count of names = %d.\n", names_count);
@@ -35,39 +68,20 @@ int main(int argc, char **argv)
 	printf("value of first string? : %c.\n", *(*names));
 	
 	// safely get the size of ages
-	int count = sizeof(ages)/sizeof(ages[0]);
+	int ages_count = sizeof(ages)/sizeof(ages[0]);
 	
-	// first way using indexing
-	for(int i = count-1; i >= 0; i--){
-		printf("%s is %d years old.\n", names[i], ages[i]);
-	}
-	printf("---\n");
-	
-	// set up the pointers to the start of the arrays
-	int curr_age[count];
-	char curr_name[5][5];
-	
-	for(int i = 0; i < count; i++){
-		curr_age[i] = ages[i];
-		strcpy(curr_name[i], names[i]);
-	}
-	
-	// second way using pointers
-	for(int i = count-1; i >= 0; i--){
-		printf("%s is %d years old.\n", curr_name[i], curr_age[i]);
-	}
+	// first print function
+	first_print(ages, ages_count, names, names_count);
 
-	printf("---\n");
+	// set up the pointers to the start of the arrays
+	int *curr_age = ages;
+	char **curr_name = names;
+
+	// second print function
+	second_print(curr_age, ages_count, curr_name);
 	
-	// third way, pointers are just arrays
-	printf("size of ages (in bytes) to which curr_age points to: %ld == %d ints.\n", sizeof(ages), count);
-	for(int i = count-1; i >= 0; i--){
-		// A difference between pointers and arrays, sizeof pointers just returns the size of pointer type
-		// sizeof an array returns the size of the whole array
-		printf("size of curr_age int pointer: %ld.\n", sizeof(curr_name));
-		printf("%s is %d years old.\n", curr_name[i], curr_age[i]);
-	}
-	
-	printf("---\n");
+	// third print function
+	third_print(curr_age, ages_count, curr_name);
+
 	return 0;
 }
