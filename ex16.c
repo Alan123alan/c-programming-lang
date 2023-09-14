@@ -13,6 +13,10 @@
 // string.h contains useful fuctions for string manipulation
 #include <string.h>
 
+// adding a typedef struct to avoid having to type struct Person everytime
+typedef struct Person Person;
+
+// defines a struct named Person with 4 fields
 struct Person {
 	char *name;
 	int age;
@@ -20,9 +24,13 @@ struct Person {
 	int weight;
 };
 
-struct Person *Person_create(char *name, int age, int height, int weight){
-	struct Person *who = malloc(sizeof(struct Person));
-	//checking that malloc operation didn't return a NULL invalid pointer
+// we are defining a function named Person_create that returns a pointer to
+// a Person struct
+Person *Person_create(char *name, int age, int height, int weight){
+	// allocates memory in heap with the size of struct Person
+	// an returns a pointer to the memory block
+	Person *who = malloc(sizeof(struct Person));
+	// checking that malloc operation didn't return a NULL invalid pointer
 	assert(who != NULL);
 	// strdup function used to duplicate the string for name
 	// to make sure this structure actually owns it	
@@ -36,13 +44,19 @@ struct Person *Person_create(char *name, int age, int height, int weight){
 
 // IMPORTANT: if you have a create function then a destroy function is always
 // needed
-void Person_destroy(struct Person *who){
+void Person_destroy(Person *who){
+	// checking that the pointer to Person struct passed as argument
+	// is not a NULL invalid pointer
 	assert(who != NULL);
+	// freeing the memory allocated by strdup function
 	free(who->name);
+	// freeing the memory allocated by malloc
 	free(who);
 }
 
-void Person_print(struct Person *who){
+// a function that takes a pointer to a Person struct
+// dereferences their members and prints them
+void Person_print(Person *who){
 	printf("Name: %s.\n", who->name);
 	printf("Age: %d.\n", who->age);
 	printf("Height: %d.\n", who->height);
@@ -51,8 +65,8 @@ void Person_print(struct Person *who){
 
 int main(int argc, char *argv[]){
 	// make people structures
-	struct Person *joe = Person_create("Joe Alex", 32, 64, 100);
-	struct Person *frank = Person_create("Frank Blank", 20, 72, 180);
+	Person *joe = Person_create("Joe Alex", 32, 64, 100);
+	Person *frank = Person_create("Frank Blank", 20, 72, 180);
 	
 	// print them out and where they are in memory
 	printf("Joe is at memory location: %p.\n", joe);
