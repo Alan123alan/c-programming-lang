@@ -1,6 +1,16 @@
+// stdio.h adds code to perform input and output operations
 #include <stdio.h>
+// assert.h is a header file from standard library 
+// in which the assert debugging macro is defined
+// this macro expands into an if block in which a test condition is tested
+// if the test evaluates to 0 (false) then the program is aborted using
+// the abort() function an a message is printed in stderr
 #include <assert.h>
+// stdlib.h is the header file of the C standard library
+// it contains the function prototypes for dynamic memory management,
+// process control, etc.
 #include <stdlib.h>
+// string.h contains useful fuctions for string manipulation
 #include <string.h>
 
 struct Person {
@@ -12,8 +22,10 @@ struct Person {
 
 struct Person *Person_create(char *name, int age, int height, int weight){
 	struct Person *who = malloc(sizeof(struct Person));
+	//checking that malloc operation didn't return a NULL invalid pointer
 	assert(who != NULL);
-	
+	// strdup function used to duplicate the string for name
+	// to make sure this structure actually owns it	
 	who->name = strdup(name);
 	who->age = age;
 	who->height = height;
@@ -22,6 +34,8 @@ struct Person *Person_create(char *name, int age, int height, int weight){
 	return who;
 }
 
+// IMPORTANT: if you have a create function then a destroy function is always
+// needed
 void Person_destroy(struct Person *who){
 	assert(who != NULL);
 	free(who->name);
