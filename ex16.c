@@ -29,7 +29,7 @@ struct Person {
 Person *Person_create(char *name, int age, int height, int weight){
 	// allocates memory in heap with the size of struct Person
 	// an returns a pointer to the memory block
-	Person *who = malloc(sizeof(struct Person));
+	Person *who = malloc(sizeof(Person));
 	// checking that malloc operation didn't return a NULL invalid pointer
 	assert(who != NULL);
 	// strdup function used to duplicate the string for name
@@ -87,6 +87,7 @@ int main(int argc, char *argv[]){
 
 	// destroy them both so we clean up
 	Person_destroy(joe);
+	Person_destroy(NULL);
 	Person_destroy(frank);
 
 	return 0;
