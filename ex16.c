@@ -87,8 +87,14 @@ int main(int argc, char *argv[]){
 
 	// destroy them both so we clean up
 	Person_destroy(joe);
-	Person_destroy(NULL);
-	Person_destroy(frank);
+	//Code added for 'How To Break It' point #1
+	//Person_destroy(NULL);
+	//Code commented for 'How To Break It' point #2
+	//Person_destroy(frank);
+	//No Valgrind available to detect memory leaks, used leak --atExit -- ./ex16
+	//To get memory leak info to confirm that leak corresponds to Person struct frank
+	//I will print and confirm that address matches leak
+	printf("frank address %p.\n", frank);
 
 	return 0;
 }
