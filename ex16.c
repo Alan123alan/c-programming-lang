@@ -14,15 +14,16 @@
 #include <string.h>
 
 // adding a typedef struct to avoid having to type struct Person everytime
-typedef struct Person Person;
+// typedef struct Person Person;
 
 // defines a struct named Person with 4 fields
-struct Person {
+// preferred way to declare a struct
+typedef struct {
 	char *name;
 	int age;
 	int height;
 	int weight;
-};
+} Person;
 
 // we are defining a function named Person_create that returns a pointer to
 // a Person struct
@@ -63,7 +64,26 @@ void Person_print(Person *who){
 	printf("Weight: %d.\n", who->weight);
 }
 
+// code for Extra Credit point 3, pass a structure by value not by pointer
+void Person_print_stack(Person who){
+	printf("Name: %s.\n", who.name);
+	printf("Age: %d.\n", who.age);
+	printf("Height: %d.\n", who.height);
+	printf("Weight: %d.\n", who.weight);
+}
+
 int main(int argc, char *argv[]){
+	// Extra Credit point 1 and 2: create all structs on the stack
+	// and initialize it using the '.' char instead of '->'
+	Person jane;  
+	// seems like when a struct is created on the stack you need
+	// to use '.' to access the struct members
+	jane.name = "Jane";
+        jane.age = 23;
+        jane.height = 23;
+        jane.weight = 23;
+	Person_print_stack(jane);
+	//printf("name: %s, age: %d.\n", jane.name, jane.age);
 	// make people structures
 	Person *joe = Person_create("Joe Alex", 32, 64, 100);
 	Person *frank = Person_create("Frank Blank", 20, 72, 180);
@@ -87,13 +107,14 @@ int main(int argc, char *argv[]){
 
 	// destroy them both so we clean up
 	Person_destroy(joe);
-	//Code added for 'How To Break It' point #1
+	// code added for 'How To Break It' point #1
 	//Person_destroy(NULL);
-	//Code commented for 'How To Break It' point #2
-	//Person_destroy(frank);
-	//No Valgrind available to detect memory leaks, used leak --atExit -- ./ex16
-	//To get memory leak info to confirm that leak corresponds to Person struct frank
-	//I will print and confirm that address matches leak
+	// code commented for 'How To Break It' point #2
+	Person_destroy(frank);
+	// no Valgrind available to detect memory leaks, 
+        // used Mac command: leaks --atExit -- ./ex16
+	// to get memory leak info to confirm that leak corresponds to Person struct frank
+	// print and confirm that address matches leak
 	printf("frank address %p.\n", frank);
 
 	return 0;
