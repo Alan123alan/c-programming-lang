@@ -23,8 +23,8 @@ bool is_armstrong_number(int candidate){
     for(int i = 0; i < digit_count; i++){
         total +=  power(digits[i], digit_count);
     }
-    printf("total: %d.\n", total);
     printf("candidate: %d | total: %d\n", candidate, total);
+    free(digits); 
     if(candidate == total)
         return true;
     return false;
