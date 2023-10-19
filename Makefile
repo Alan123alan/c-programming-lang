@@ -6,3 +6,6 @@ clean:
 	rm -rf extra10 extra10.dSYM/
 cleanSyntaxStructures:
 	rm -rf syntax_structures syntax_structures.dSYM
+
+cleanExercism:
+	rm -rf armstrong_numbers armstrong_numbers.dSYM
