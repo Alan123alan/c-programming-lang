@@ -9,6 +9,8 @@ typedef struct {
    list_element_t elements[];
 } list_t;
 
+/*IMPLEMENTED*/
+
 // constructs a new list
 list_t *new_list(size_t length, list_element_t elements[]);
 // append entries to a list and return the new list
@@ -17,9 +19,21 @@ list_t *append_list(list_t *list1, list_t *list2);
 list_t *filter_list(list_t *list, bool (*filter)(list_element_t));
 // returns the length of the list
 size_t length_list(list_t *list);
+// destroy the entire list
+// list will be a dangling pointer after calling this method on it
+void delete_list(list_t *list);
+// prints elements in a list similar to how python does when printing lists
+void print_list_elements(size_t length, list_element_t elements[]);
+// a utility function to test filter
+bool is_greater_than_2(list_element_t element);
 // return a list of elements whose values equal the list value transformed by
 // the mapping function
-//list_t *map_list(list_t *list, list_element_t (*map)(list_element_t));
+list_t *map_list(list_t *list, list_element_t (*map)(list_element_t));
+// utility function to test map
+list_element_t duplicate(list_element_t element);
+
+/*PENDING*/
+
 // folds (reduces) the given list from the left with a function
 //list_element_t foldl_list(list_t *list, list_element_t initial,
 //                          list_element_t (*foldl)(list_element_t,
@@ -30,13 +44,7 @@ size_t length_list(list_t *list);
 //                                                  list_element_t));
 // reverse the elements of the list
 //list_t *reverse_list(list_t *list);
-// destroy the entire list
-// list will be a dangling pointer after calling this method on it
-void delete_list(list_t *list);
-// prints elements in a list similar to how python does when printing lists
-void print_list_elements(size_t length, list_element_t elements[]);
-// a utility function to test print
-bool is_greater_than_2(list_element_t element);
+
 
 
 int main(int argc, char *argv[]){
@@ -55,10 +63,20 @@ int main(int argc, char *argv[]){
     list_t *filtered_list1 = filter_list(list1, is_greater_than_2);
     printf("filtered list1 length: %zu.\n", filtered_list1->length);
     print_list_elements(filtered_list1->length, filtered_list1->elements);
+    
+    print_list_elements(list1->length, list1->elements);
+    list_t *mapped_list1 = map_list(list1, duplicate);
+    printf("mapped list1 length: %zu.\n", mapped_list1->length);
+    print_list_elements(mapped_list1->length, mapped_list1->elements);
     delete_list(list1);
     delete_list(list2);
     delete_list(combined_lists);
     delete_list(filtered_list1);
+    delete_list(mapped_list1);
+}
+
+list_element_t duplicate(list_element_t element){
+    return element*2;
 }
 
 bool is_greater_than_2(list_element_t element){
@@ -115,6 +133,8 @@ size_t length_list(list_t *list){
 
 //I didn't know you could pass functions to another functions in C
 list_t *filter_list(list_t *list, bool (*filter)(list_element_t)){
+    //should this function do a previous loop to count the elements that
+    //pass the filter? so we can allocate just enough memory?
     list_t *filtered_list = malloc(sizeof(list_t));
     filtered_list->length = 0;
     int j = 0;
@@ -126,4 +146,19 @@ list_t *filter_list(list_t *list, bool (*filter)(list_element_t)){
         }
     }
     return filtered_list;
+}
+
+list_t *map_list(list_t *list, list_element_t (*map)(list_element_t)){
+    //a mapped list maintains it's size so using size of original list should be fine
+    list_t *mapped_list = malloc(sizeof(list_t) + (sizeof(list_element_t)*list->length));
+    mapped_list->length = list->length;
+    printf("length of list 1: %zu.\n", list->length);
+    printf("Size of mapped list 1: %lu.\n", sizeof(mapped_list));
+    for(int i = 0; i < (int)list->length; i++){
+        list_element_t temp = list->elements[i];
+        mapped_list->elements[i] = map(temp);
+    }
+    printf("length of mapped list 1: %zu.\n", mapped_list->length);
+    printf("Size of mapped list 1: %lu.\n", sizeof(mapped_list));
+    return mapped_list;
 }
