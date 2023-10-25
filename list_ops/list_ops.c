@@ -62,7 +62,6 @@ int main(int argc, char *argv[]){
     printf("filtered list1 length: %zu.\n", filtered_list1->length);
     print_list_elements(filtered_list1->length, filtered_list1->elements);
     
-    print_list_elements(list1->length, list1->elements);
     list_t *mapped_list1 = map_list(list1, duplicate);
     printf("mapped list1 length: %zu.\n", mapped_list1->length);
     print_list_elements(mapped_list1->length, mapped_list1->elements);
@@ -70,11 +69,18 @@ int main(int argc, char *argv[]){
     printf("The result of left reducing list 1 with an initial value of 0 is: %d.\n", reduce_l_result);
     list_element_t reduce_r_result = foldr_list(list1, 0, reduce_by_square);
     printf("The result of rigth reducing list 1 with an initial value of 0 is: %d.\n", reduce_r_result);
+    list_t *reversed_list1 = reverse_list(list1);
+    print_list_elements(reversed_list1->length, reversed_list1->elements);
+  
+    list_t *empty_list = new_list(0, NULL);
+    printf("empty_list size should be 8 bytes? 4 bytes for the size_t type and 4 bytes for the char pointer : %lu./n", sizeof(empty_list));
+    printf("lets check if empty_list->elements == NULL : %d./n", empty_list->elements == NULL);
     delete_list(list1);
     delete_list(list2);
     delete_list(combined_lists);
     delete_list(filtered_list1);
     delete_list(mapped_list1);
+    delete_list(reversed_list1);
 }
 
 list_element_t duplicate(list_element_t element){
@@ -102,15 +108,10 @@ list_t *new_list(size_t length, list_element_t elements[]){
     //How to allocate memory for a struct that includes a flexible array?
     //dynamically allocate enough memory for the struct + the calculated length of the array
     list_t *new_list = malloc(sizeof(list_t) + (sizeof(list_element_t)*length));
-    //confirming size of new_list struct, expected to be 28?
-    printf("%lu.\n", sizeof(new_list));
     new_list->length = length;
     for(int i = 0; i < (int)length; i++){
-        printf("%d\t|", elements[i]);
         new_list->elements[i] = elements[i];
-        printf("%d\t|", new_list->elements[i]);
     }
-    printf("\n");
     return new_list;
 }
 
@@ -159,14 +160,10 @@ list_t *map_list(list_t *list, list_element_t (*map)(list_element_t)){
     //a mapped list maintains it's size so using size of original list should be fine
     list_t *mapped_list = malloc(sizeof(list_t) + (sizeof(list_element_t)*list->length));
     mapped_list->length = list->length;
-    printf("length of list 1: %zu.\n", list->length);
-    printf("Size of mapped list 1: %lu.\n", sizeof(mapped_list));
     for(int i = 0; i < (int)list->length; i++){
         list_element_t temp = list->elements[i];
         mapped_list->elements[i] = map(temp);
     }
-    printf("length of mapped list 1: %zu.\n", mapped_list->length);
-    printf("Size of mapped list 1: %lu.\n", sizeof(mapped_list));
     return mapped_list;
 }
 
@@ -188,8 +185,11 @@ list_element_t foldr_list(list_t *list,list_element_t initial, list_element_t (*
 
 
 list_t *reverse_list(list_t *list){
-    list_t *reversed_list = malloc
-    for(int i = (int)list->length; i >=0; i--){
-      
+    list_t *reversed_list = malloc(sizeof(list_t) + (sizeof(list_element_t)*list->length));
+    reversed_list->length = list->length;
+    for(int i = (int)reversed_list->length - 1; i >= 0; i--){
+	printf("element %d at indx %d in original list maps to indx %lu in reversed list.\n", list->elements[i], i, (reversed_list->length - i));
+        reversed_list->elements[(reversed_list->length-1) - i] = list->elements[i]; 
     }
+    return reversed_list;
 }
