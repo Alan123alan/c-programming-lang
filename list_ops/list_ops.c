@@ -35,15 +35,13 @@ list_element_t duplicate(list_element_t element);
 list_element_t foldl_list(list_t *list, list_element_t initial, list_element_t (*foldl)(list_element_t, list_element_t));
 //utility function to reduce a list by squaring it
 list_element_t reduce_by_square(list_element_t accumulator, list_element_t element);
+// folds (reduces) the given list from the right with a function
+list_element_t foldr_list(list_t *list, list_element_t initial, list_element_t (*foldr)(list_element_t, list_element_t));
+// reverse the elements of the list
+list_t *reverse_list(list_t *list);
+
 
 /*PENDING*/
-
-// folds (reduces) the given list from the right with a function
-//list_element_t foldr_list(list_t *list, list_element_t initial,
-//                          list_element_t (*foldr)(list_element_t,
-//                                                  list_element_t));
-// reverse the elements of the list
-//list_t *reverse_list(list_t *list);
 
 
 
@@ -68,8 +66,10 @@ int main(int argc, char *argv[]){
     list_t *mapped_list1 = map_list(list1, duplicate);
     printf("mapped list1 length: %zu.\n", mapped_list1->length);
     print_list_elements(mapped_list1->length, mapped_list1->elements);
-    list_element_t reduce_result = foldl_list(list1, 0, reduce_by_square);
-    printf("The result of reducing list 1 with an initial value of 0 is: %d.\n", reduce_result);
+    list_element_t reduce_l_result = foldl_list(list1, 0, reduce_by_square);
+    printf("The result of left reducing list 1 with an initial value of 0 is: %d.\n", reduce_l_result);
+    list_element_t reduce_r_result = foldr_list(list1, 0, reduce_by_square);
+    printf("The result of rigth reducing list 1 with an initial value of 0 is: %d.\n", reduce_r_result);
     delete_list(list1);
     delete_list(list2);
     delete_list(combined_lists);
@@ -176,4 +176,20 @@ list_element_t foldl_list(list_t *list,list_element_t initial, list_element_t (*
         accumulator = reducer(accumulator, list->elements[i]);
     }
     return accumulator;
+}
+
+list_element_t foldr_list(list_t *list,list_element_t initial, list_element_t (*reducer)(list_element_t, list_element_t)){
+    list_element_t accumulator =  initial;
+    for(int i = ((int)list->length)-1; i >= 0; i--){
+        accumulator = reducer(accumulator, list->elements[i]);
+    }
+    return accumulator;
+}
+
+
+list_t *reverse_list(list_t *list){
+    list_t *reversed_list = malloc
+    for(int i = (int)list->length; i >=0; i--){
+      
+    }
 }
