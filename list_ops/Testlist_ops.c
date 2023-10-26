@@ -326,18 +326,15 @@ int main(void)
    RUN_TEST(test_filter_non_empty_list);
    RUN_TEST(test_length_empty_list);
    RUN_TEST(test_length_non_empty_list);
-   //Test for map function was failing
    RUN_TEST(test_map_empty_list);
-//    RUN_TEST(test_map_non_empty_list);
-//    RUN_TEST(test_foldl_empty_list);
-//    RUN_TEST(
-//        test_foldl_direction_independent_function_applied_to_non_empty_list);
-//    RUN_TEST(test_foldl_direction_dependent_function_applied_to_non_empty_list);
-//    RUN_TEST(test_foldr_empty_list);
-//    RUN_TEST(
-//        test_foldr_direction_independent_function_applied_to_non_empty_list);
-//    RUN_TEST(test_foldr_direction_dependent_function_applied_to_non_empty_list);
-//    RUN_TEST(test_reverse_empty_list);
-//    RUN_TEST(test_reverse_non_empty_list);
+   RUN_TEST(test_map_non_empty_list);
+   RUN_TEST(test_foldl_empty_list);
+   RUN_TEST(test_foldl_direction_independent_function_applied_to_non_empty_list);
+   RUN_TEST(test_foldl_direction_dependent_function_applied_to_non_empty_list);
+   RUN_TEST(test_foldr_empty_list);
+   RUN_TEST(test_foldr_direction_independent_function_applied_to_non_empty_list);
+   RUN_TEST(test_foldr_direction_dependent_function_applied_to_non_empty_list);
+   RUN_TEST(test_reverse_empty_list);
+   RUN_TEST(test_reverse_non_empty_list);
    return UnityEnd();
 }
