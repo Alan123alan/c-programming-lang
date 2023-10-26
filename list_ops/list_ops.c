@@ -1,95 +1,49 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#include "list_ops.h"
 
-typedef int list_element_t;
+// int main(int argc, char *argv[]){
+//     list_element_t list1_elements[] = {0,1,2,3,4,5};
+//     list_element_t list2_elements[] = {6,7,8,9,10,11};
+//     list_t *list1 = new_list(6, list1_elements);
+//     list_t *list2 = new_list(6, list2_elements);
+//     printf("list1:\n");
+//     print_list(list1->length, list1->elements);
+//     printf("list2:\n");
+//     print_list(list2->length, list2->elements);
+//     list_t *combined_lists = append_list(list1, list2);
+//     printf("combined_lists:\n");
+//     print_list(combined_lists->length, combined_lists->elements);
 
-typedef struct {
-   size_t length;
-   list_element_t elements[];
-} list_t;
-
-/*IMPLEMENTED*/
-
-// constructs a new list
-list_t *new_list(size_t length, list_element_t elements[]);
-// append entries to a list and return the new list
-list_t *append_list(list_t *list1, list_t *list2);
-// filter list returning only values that satisfy the filter function
-list_t *filter_list(list_t *list, bool (*filter)(list_element_t));
-// returns the length of the list
-size_t length_list(list_t *list);
-// destroy the entire list
-// list will be a dangling pointer after calling this method on it
-void delete_list(list_t *list);
-// prints elements in a list similar to how python does when printing lists
-void print_list_elements(size_t length, list_element_t elements[]);
-// a utility function to test filter
-bool is_greater_than_2(list_element_t element);
-// return a list of elements whose values equal the list value transformed by
-// the mapping function
-list_t *map_list(list_t *list, list_element_t (*map)(list_element_t));
-// utility function to test map
-list_element_t duplicate(list_element_t element);
-// folds (reduces) the given list from the left with a function
-list_element_t foldl_list(list_t *list, list_element_t initial, list_element_t (*foldl)(list_element_t, list_element_t));
-//utility function to reduce a list by squaring it
-list_element_t reduce_by_square(list_element_t accumulator, list_element_t element);
-// folds (reduces) the given list from the right with a function
-list_element_t foldr_list(list_t *list, list_element_t initial, list_element_t (*foldr)(list_element_t, list_element_t));
-// reverse the elements of the list
-list_t *reverse_list(list_t *list);
-
-
-/*PENDING*/
-
-
-
-int main(int argc, char *argv[]){
-    list_element_t list1_elements[] = {0,1,2,3,4,5};
-    list_element_t list2_elements[] = {6,7,8,9,10,11};
-    list_t *list1 = new_list(6, list1_elements);
-    list_t *list2 = new_list(6, list2_elements);
-    printf("list1 length: %zu.\n", list1->length);
-    print_list_elements(list1->length, list1->elements);
-    printf("list2 length: %zu.\n", list2->length);
-    print_list_elements(list2->length, list2->elements);
-    list_t *combined_lists = append_list(list1, list2);
-    printf("list1 and list 2 combined length: %zu.\n", combined_lists->length);
-    print_list_elements(combined_lists->length, combined_lists->elements);
-
-    list_t *empty_list1 = new_list(0, NULL);
-    list_t *empty_list2 = new_list(0, NULL);
-    list_t *combined_empty_lists = append_list(empty_list1, empty_list2);
-    printf("empty lists combined length: %zu.\n", combined_empty_lists->length);
-    print_list_elements(combined_empty_lists->length, combined_empty_lists->elements);
+//     list_t *empty_list1 = new_list(0, NULL);
+//     list_t *empty_list2 = new_list(0, NULL);
+//     list_t *combined_empty_lists = append_list(empty_list1, empty_list2);
+//     printf("combined_empty_lists:\n");
+//     print_list(combined_empty_lists->length, combined_empty_lists->elements);
     
-    list_t *filtered_list1 = filter_list(list1, is_greater_than_2);
-    printf("filtered list1 length: %zu.\n", filtered_list1->length);
-    print_list_elements(filtered_list1->length, filtered_list1->elements);
+//     list_t *filtered_list1 = filter_list(list1, is_greater_than_2);
+//     printf("filtered_list1:\n");
+//     print_list(filtered_list1->length, filtered_list1->elements);
     
-    list_t *mapped_list1 = map_list(list1, duplicate);
-    printf("mapped list1 length: %zu.\n", mapped_list1->length);
-    print_list_elements(mapped_list1->length, mapped_list1->elements);
-    list_element_t reduce_l_result = foldl_list(list1, 0, reduce_by_square);
-    printf("The result of left reducing list 1 with an initial value of 0 is: %d.\n", reduce_l_result);
-    list_element_t reduce_r_result = foldr_list(list1, 0, reduce_by_square);
-    printf("The result of rigth reducing list 1 with an initial value of 0 is: %d.\n", reduce_r_result);
-    list_t *reversed_list1 = reverse_list(list1);
-    print_list_elements(reversed_list1->length, reversed_list1->elements);
+//     list_t *mapped_list1 = map_list(list1, duplicate);
+//     printf("mapped_list1:\n");
+//     print_list(mapped_list1->length, mapped_list1->elements);
+//     list_element_t reduce_l_result = foldl_list(list1, 0, reduce_by_square);
+//     printf("reduce_l_result: %d.\n", reduce_l_result);
+//     list_element_t reduce_r_result = foldr_list(list1, 0, reduce_by_square);
+//     printf("reduce_r_result: %d.\n", reduce_r_result);
+//     list_t *reversed_list1 = reverse_list(list1);
+//     printf("reversed_list1:\n");
+//     print_list(reversed_list1->length, reversed_list1->elements);
   
-    list_t *empty_list = new_list(0, NULL);
-    printf("empty_list size should be 8 bytes? 4 bytes for the size_t type and 4 bytes for the char pointer : %lu.\n", sizeof(empty_list));
-    printf("Bytes for the size_t type: %lu.\n", sizeof(empty_list->length));
-    printf("elements point to:  %d.\n", *(empty_list->elements));
-    printf("elements point to something equal to null:  %d.\n", *(empty_list->elements) == NULL);
-    delete_list(list1);
-    delete_list(list2);
-    delete_list(combined_lists);
-    delete_list(filtered_list1);
-    delete_list(mapped_list1);
-    delete_list(reversed_list1);
-}
+//     delete_list(list1);
+//     delete_list(list2);
+//     delete_list(empty_list1);
+//     delete_list(empty_list2);
+//     delete_list(combined_lists);
+//     delete_list(combined_empty_lists);
+//     delete_list(filtered_list1);
+//     delete_list(mapped_list1);
+//     delete_list(reversed_list1);
+// }
 
 list_element_t duplicate(list_element_t element){
     return element*2;
@@ -104,10 +58,17 @@ bool is_greater_than_2(list_element_t element){
 	return element > 2;
 }
 
-void print_list_elements(size_t length, list_element_t elements[]){
+void print_list(size_t length, list_element_t elements[]){
+    printf("Elements -> [");
     for(int i = 0; i < (int)length; i++){
-        printf("%d\t", elements[i]);
+        printf("%d", elements[i]);
+        if(i < ((int)length - 1)){
+            printf(", ");
+        }
     }
+    printf("]");
+    printf("\n");
+    printf("Length -> %lu\n", length);
     printf("\n");
 }
 
