@@ -151,6 +151,15 @@ list_t *filter_list(list_t *list, bool (*filter)(list_element_t)){
 }
 
 list_t *map_list(list_t *list, list_element_t (*map)(list_element_t)){
+    if(list->length == 0){
+        list_t *empty_list = malloc(sizeof(list_t));
+        if(empty_list == NULL){
+            perror("Memory allocation for list_t failed");
+            exit(EXIT_FAILURE);
+        }
+        empty_list->length = 0;
+        return empty_list;
+    }
     //a mapped list maintains it's size so using size of original list should be fine
     list_t *mapped_list = malloc(sizeof(list_t) + (sizeof(list_element_t)*list->length));
     mapped_list->length = list->length;

@@ -6,9 +6,11 @@ static list_t *list = NULL;
 static list_t *list2 = NULL;
 static list_t *actual = NULL;
 static char *error_message = NULL;
+
 void setUp(void)
 {
 }
+
 static void release_lists(int count, ...)
 {
    va_list ptr;
@@ -22,6 +24,7 @@ static void release_lists(int count, ...)
    }
    va_end(ptr);
 }
+
 void tearDown(void)
 {
    release_lists(3, &list, &list2, &actual);
@@ -30,6 +33,7 @@ void tearDown(void)
       error_message = NULL;
    }
 }
+
 static char *print_elements(size_t length, list_element_t list_elements[])
 {
    char *array = malloc(MAX_STRING_LEN * sizeof(char));
@@ -57,6 +61,7 @@ static char *create_error_message(size_t length,
    free(actual_string);
    return message;
 }
+
 static void check_lists_match(size_t expected_length,
                               list_element_t expected_elements[],
                               list_t *actual)
@@ -77,34 +82,41 @@ static void check_lists_match(size_t expected_length,
       error_message = NULL;
    }
 }
+
 static bool filter_modulo(list_element_t element)
 {
    return (element % 2 == 1);
 }
+
 static list_element_t map_increment(list_element_t element)
 {
    return element + 1;
 }
+
 static list_element_t fold_multiply(list_element_t element,
                                     list_element_t accumulator)
 {
    return element * accumulator;
 }
+
 static list_element_t fold_add(list_element_t element,
                                list_element_t accumulator)
 {
    return element + accumulator;
 }
+
 static list_element_t fold_divide(list_element_t element,
                                   list_element_t accumulator)
 {
    return (accumulator == 0) ? 0 : element / accumulator;
 }
+
 static void call_delete_list(list_t **list)
 {
    delete_list(*list);
    *list = NULL;
 }
+
 static void test_append_empty_lists(void)
 {
    list = new_list(0, NULL);
@@ -115,9 +127,10 @@ static void test_append_empty_lists(void)
    call_delete_list(&list2);
    call_delete_list(&actual);
 }
+
 static void test_append_list_to_empty_list(void)
 {
-   TEST_IGNORE();   // delete this line to run test
+   //TEST_IGNORE();   // delete this line to run test
    list = new_list(0, NULL);
    list2 = new_list(3, (list_element_t[]){ 1, 3, 4 });
    size_t expected_length = 3;
@@ -128,9 +141,10 @@ static void test_append_list_to_empty_list(void)
    call_delete_list(&list2);
    call_delete_list(&actual);
 }
+
 static void test_append_empty_list_to_list(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(4, (list_element_t[]){ 1, 2, 3, 4 });
    list2 = new_list(0, NULL);
    size_t expected_length = 4;
@@ -141,9 +155,10 @@ static void test_append_empty_list_to_list(void)
    call_delete_list(&list2);
    call_delete_list(&actual);
 }
+
 static void test_append_non_empty_lists(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(2, (list_element_t[]){ 1, 2 });
    list2 = new_list(4, (list_element_t[]){ 2, 3, 4, 5 });
    size_t expected_length = 6;
@@ -154,18 +169,20 @@ static void test_append_non_empty_lists(void)
    call_delete_list(&list2);
    call_delete_list(&actual);
 }
+
 static void test_filter_empty_list(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(0, NULL);
    actual = filter_list(list, filter_modulo);
    check_lists_match(0, NULL, actual);
    call_delete_list(&list);
    call_delete_list(&actual);
 }
+
 static void test_filter_non_empty_list(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(5, (list_element_t[]){ 1, 2, 3, 4, 5 });
    size_t expected_length = 3;
    list_element_t expected_elements[] = { 1, 3, 5 };
@@ -174,18 +191,20 @@ static void test_filter_non_empty_list(void)
    call_delete_list(&list);
    call_delete_list(&actual);
 }
+
 static void test_length_empty_list(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(0, NULL);
    size_t expected = 0;
    size_t actual = length_list(list);
    TEST_ASSERT_EQUAL(expected, actual);
    call_delete_list(&list);
 }
+
 static void test_length_non_empty_list(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(4, (list_element_t[]){ 1, 2, 3, 4 });
    size_t expected = 4;
    size_t actual = length_list(list);
@@ -194,7 +213,7 @@ static void test_length_non_empty_list(void)
 }
 static void test_map_empty_list(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(0, NULL);
    actual = map_list(list, map_increment);
    check_lists_match(0, NULL, actual);
@@ -203,7 +222,7 @@ static void test_map_empty_list(void)
 }
 static void test_map_non_empty_list(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(4, (list_element_t[]){ 1, 3, 5, 7 });
    size_t expected_length = 4;
    list_element_t expected_elements[] = { 2, 4, 6, 8 };
@@ -214,7 +233,7 @@ static void test_map_non_empty_list(void)
 }
 static void test_foldl_empty_list(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(0, NULL);
    list_element_t initial = 2;
    list_element_t expected = 2;
@@ -225,7 +244,7 @@ static void test_foldl_empty_list(void)
 static void
 test_foldl_direction_independent_function_applied_to_non_empty_list(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(4, (list_element_t[]){ 1, 2, 3, 4 });
    list_element_t initial = 5;
    list_element_t expected = 15;
@@ -236,7 +255,7 @@ test_foldl_direction_independent_function_applied_to_non_empty_list(void)
 static void
 test_foldl_direction_dependent_function_applied_to_non_empty_list(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(2, (list_element_t[]){ 2, 5 });
    list_element_t initial = 5;
    list_element_t expected = 0;
@@ -246,7 +265,7 @@ test_foldl_direction_dependent_function_applied_to_non_empty_list(void)
 }
 static void test_foldr_empty_list(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(0, NULL);
    list_element_t initial = 2;
    list_element_t expected = 2;
@@ -257,7 +276,7 @@ static void test_foldr_empty_list(void)
 static void
 test_foldr_direction_independent_function_applied_to_non_empty_list(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(4, (list_element_t[]){ 1, 2, 3, 4 });
    list_element_t initial = 5;
    list_element_t expected = 15;
@@ -268,7 +287,7 @@ test_foldr_direction_independent_function_applied_to_non_empty_list(void)
 static void
 test_foldr_direction_dependent_function_applied_to_non_empty_list(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(2, (list_element_t[]){ 2, 5 });
    list_element_t initial = 5;
    list_element_t expected = 2;
@@ -278,7 +297,7 @@ test_foldr_direction_dependent_function_applied_to_non_empty_list(void)
 }
 static void test_reverse_empty_list(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(0, NULL);
    actual = reverse_list(list);
    check_lists_match(0, NULL, actual);
@@ -287,7 +306,7 @@ static void test_reverse_empty_list(void)
 }
 static void test_reverse_non_empty_list(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    list = new_list(4, (list_element_t[]){ 1, 3, 5, 7 });
    size_t expected_length = 4;
    list_element_t expected_elements[] = { 7, 5, 3, 1 };
@@ -301,13 +320,14 @@ int main(void)
    UnityBegin("test_list_ops.c");
    RUN_TEST(test_append_empty_lists);
    RUN_TEST(test_append_list_to_empty_list);
-//    RUN_TEST(test_append_empty_list_to_list);
-//    RUN_TEST(test_append_non_empty_lists);
-//    RUN_TEST(test_filter_empty_list);
-//    RUN_TEST(test_filter_non_empty_list);
-//    RUN_TEST(test_length_empty_list);
-//    RUN_TEST(test_length_non_empty_list);
-//    RUN_TEST(test_map_empty_list);
+   RUN_TEST(test_append_empty_list_to_list);
+   RUN_TEST(test_append_non_empty_lists);
+   RUN_TEST(test_filter_empty_list);
+   RUN_TEST(test_filter_non_empty_list);
+   RUN_TEST(test_length_empty_list);
+   RUN_TEST(test_length_non_empty_list);
+   //Test for map function was failing
+   RUN_TEST(test_map_empty_list);
 //    RUN_TEST(test_map_non_empty_list);
 //    RUN_TEST(test_foldl_empty_list);
 //    RUN_TEST(
