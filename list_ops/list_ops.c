@@ -57,6 +57,12 @@ int main(int argc, char *argv[]){
     list_t *combined_lists = append_list(list1, list2);
     printf("list1 and list 2 combined length: %zu.\n", combined_lists->length);
     print_list_elements(combined_lists->length, combined_lists->elements);
+
+    list_t *empty_list1 = new_list(0, NULL);
+    list_t *empty_list2 = new_list(0, NULL);
+    list_t *combined_empty_lists = append_list(empty_list1, empty_list2);
+    printf("empty lists combined length: %zu.\n", combined_empty_lists->length);
+    print_list_elements(combined_empty_lists->length, combined_empty_lists->elements);
     
     list_t *filtered_list1 = filter_list(list1, is_greater_than_2);
     printf("filtered list1 length: %zu.\n", filtered_list1->length);
@@ -73,8 +79,10 @@ int main(int argc, char *argv[]){
     print_list_elements(reversed_list1->length, reversed_list1->elements);
   
     list_t *empty_list = new_list(0, NULL);
-    printf("empty_list size should be 8 bytes? 4 bytes for the size_t type and 4 bytes for the char pointer : %lu./n", sizeof(empty_list));
-    printf("lets check if empty_list->elements == NULL : %d./n", empty_list->elements == NULL);
+    printf("empty_list size should be 8 bytes? 4 bytes for the size_t type and 4 bytes for the char pointer : %lu.\n", sizeof(empty_list));
+    printf("Bytes for the size_t type: %lu.\n", sizeof(empty_list->length));
+    printf("elements point to:  %d.\n", *(empty_list->elements));
+    printf("elements point to something equal to null:  %d.\n", *(empty_list->elements) == NULL);
     delete_list(list1);
     delete_list(list2);
     delete_list(combined_lists);
@@ -107,7 +115,21 @@ void print_list_elements(size_t length, list_element_t elements[]){
 list_t *new_list(size_t length, list_element_t elements[]){
     //How to allocate memory for a struct that includes a flexible array?
     //dynamically allocate enough memory for the struct + the calculated length of the array
+    //adding a case for when length is == 0
+    if(length == 0){
+        list_t *empty_list = malloc(sizeof(list_t));
+        if(empty_list == NULL){
+            perror("Memory allocation for list_t failed.\n");
+            exit(EXIT_FAILURE);
+        }
+        empty_list->length = 0;
+        return empty_list;
+    }
     list_t *new_list = malloc(sizeof(list_t) + (sizeof(list_element_t)*length));
+    if(new_list == NULL){
+        perror("Memory allocation for list_t failed.\n");
+        exit(EXIT_FAILURE);
+    }
     new_list->length = length;
     for(int i = 0; i < (int)length; i++){
         new_list->elements[i] = elements[i];
@@ -120,17 +142,28 @@ void delete_list(list_t *list){
 }
 
 list_t *append_list(list_t *list1, list_t *list2){
-    size_t total_length = list1->length + list2->length;
-    list_t *new_list = malloc(sizeof(list_t) + (sizeof(list_element_t) * total_length));
-    new_list->length = total_length;
-    //can I skip temp list memory allocation as in the new_list function?
-    //list_element_t *new_elements = malloc(sizeof(list_element_t)*(new_list->length));
-    //yes and no, you need to account for the array size in the struct
-    for(int i = 0; i < (int)list1->length; i++){
-       new_list->elements[i] = list1->elements[i]; 
+    if(list1 == NULL || list2 == NULL){
+        perror("One of the list_t to be appended is NULL.\n");
+        return NULL;
     }
-    for(int j = (int)list1->length; j < (int)new_list->length; j++){
-       new_list->elements[j] = list2->elements[j-(int)list1->length]; 
+    size_t total_length = list1->length + list2->length;
+    if(total_length == 0){
+        return new_list(total_length, NULL);
+    }
+    list_t *new_list = malloc(sizeof(list_t) + (sizeof(list_element_t) * total_length));
+    if(new_list == NULL){
+        perror("Memory allocation for list_t failed.\n");
+        exit(EXIT_FAILURE);
+    }
+    new_list->length = total_length;
+    int i = 0;
+    while(i < (int)list1->length){
+       new_list->elements[i] = list1->elements[i]; 
+       i++;
+    }
+    while(i < (int)total_length){
+       new_list->elements[i] = list2->elements[i-(int)list1->length]; 
+       i++;
     }
     return new_list;
 }
