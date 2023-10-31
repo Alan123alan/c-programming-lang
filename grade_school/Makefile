@@ -9,3 +9,4 @@ main:
 
 clean:
 	rm -rf grade_school grade_school.dSYM
+	rm -rf Testgrade_school Testgrade_school.dSYM

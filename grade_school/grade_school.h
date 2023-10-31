@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define MAX_NAME_LENGTH 20
 #define MAX_STUDENTS 20
@@ -21,7 +22,7 @@ typedef struct {
 
 void init_roster(roster_t *roster);
 
-void add_student(roster_t *roster, char name[], uint8_t grade);
+bool add_student(roster_t *roster, char name[], uint8_t grade);
 
 roster_t get_grade(roster_t *roster, uint8_t desired_grade);
 
