@@ -26,5 +26,7 @@ bool add_student(roster_t *roster, char name[], uint8_t grade);
 
 roster_t get_grade(roster_t *roster, uint8_t desired_grade);
 
+void sort_by_grade(roster_t *roster);
+
 #endif
 
