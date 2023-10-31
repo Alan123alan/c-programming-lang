@@ -160,7 +160,7 @@ static void test_students_are_sorted_by_grades_in_roster(void)
 }
 static void test_students_are_sorted_by_name_in_roster(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    roster_t expected = { 3,
                          { (student_t){ 2, "Alex" }, (student_t){ 2, "Peter" },
                            (student_t){ 2, "Zoe" } } };
@@ -173,7 +173,7 @@ static void test_students_are_sorted_by_name_in_roster(void)
 }
 static void test_students_are_sorted_by_grades_and_then_by_names_in_roster(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    roster_t expected = { 7,
                          { (student_t){ 1, "Anna" }, (student_t){ 1, "Barb" },
                            (student_t){ 1, "Charlie" },
@@ -192,7 +192,7 @@ static void test_students_are_sorted_by_grades_and_then_by_names_in_roster(void)
 }
 static void test_grade_empty_if_no_students_in_roster(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    uint8_t desired_grade = 1;
    roster_t roster;
    init_roster(&roster);
@@ -201,7 +201,7 @@ static void test_grade_empty_if_no_students_in_roster(void)
 }
 static void test_grade_empty_if_no_students_in_grade(void)
 {
-   TEST_IGNORE();
+   //TEST_IGNORE();
    uint8_t desired_grade = 1;
    roster_t roster;
    init_roster(&roster);

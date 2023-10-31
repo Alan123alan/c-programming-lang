@@ -48,6 +48,22 @@ void sort_by_grade(roster_t *roster){
     }
 }
 
+//alphabeticall bubble sort?
+void sort_by_name(roster_t *roster){
+    size_t count = roster->count;
+    for (size_t i = 0; i < count; i++)
+    {
+        for (size_t j = 0; j < (count-1)-i; j++)
+        {
+            if(tolower(roster->students[j].name[0]) > tolower(roster->students[j+1].name[0]) && roster->students[j].grade == roster->students[j+1].grade){
+                student_t temp = roster->students[j+1];
+                roster->students[j+1] = roster->students[j];
+                roster->students[j] = temp;
+            }
+        }
+    }
+}
+
 bool add_student(roster_t *roster, char name[], uint8_t grade){
     student_t student;
     student.grade = grade;
@@ -65,6 +81,7 @@ bool add_student(roster_t *roster, char name[], uint8_t grade){
     roster->students[roster->count] = student;
     roster->count += 1;
     sort_by_grade(roster);
+    sort_by_name(roster);
     return true;
 }
 
