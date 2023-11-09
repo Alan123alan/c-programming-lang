@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-#include <stdbool.h>
-
-bool is_isogram(const char phrase[]);
-
+#include "isograms.h"
 
 bool is_isogram(const char phrase[]){
     if(phrase == NULL)
@@ -25,9 +19,9 @@ bool is_isogram(const char phrase[]){
     return true; 
 }
 
-int main(int argc, char *argv[]){
-    char some_phrase[] = "isogram";
-    printf("%s is an isogram? %d.\n", some_phrase, is_isogram(some_phrase));
-    printf("%s is an isogram? %d.\n", some_phrase, is_isogram("isograms"));
-    printf("%s is an isogram? %d.\n", some_phrase, is_isogram(NULL));
-}
+// int main(int argc, char *argv[]){
+//     char some_phrase[] = "isogram";
+//     printf("%s is an isogram? %d.\n", some_phrase, is_isogram(some_phrase));
+//     printf("%s is an isogram? %d.\n", some_phrase, is_isogram("isograms"));
+//     printf("%s is an isogram? %d.\n", some_phrase, is_isogram(NULL));
+// }
