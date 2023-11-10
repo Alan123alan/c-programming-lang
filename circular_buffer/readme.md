@@ -1,5 +1,8 @@
 #### Circular Buffer
 
+References:
+- [Wikipedia Circular Buffer](https://es.wikipedia.org/wiki/Buffer_circular)
+
 A circular buffer works with two pointers to access the elements in the buffer, both move incrementaly  
 and ciclically, this means that after the pointer that's pointing to the last element in the circular  
 buffer is incremented it will now point to the first element in the buffer.
